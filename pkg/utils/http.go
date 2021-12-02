@@ -3,6 +3,7 @@ package utils
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
@@ -91,7 +92,9 @@ type UserCtxKey struct{}
 
 // Get user from context
 func GetUserFromCtx(ctx context.Context) (*models.User, error) {
+	fmt.Println(ctx)
 	user, ok := ctx.Value(UserCtxKey{}).(*models.User)
+	fmt.Println(user)
 	if !ok {
 		return nil, httpErrors.Unauthorized
 	}

@@ -31,7 +31,7 @@ services:
       - web_api
 
   postgesql:
-    image: postgres:12-alpine
+    image: postgres:latest
     container_name: api_postgesql
     ports:
       - "5432:5432"
