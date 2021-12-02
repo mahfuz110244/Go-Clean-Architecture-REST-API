@@ -8,12 +8,12 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/pkg/errors"
 
-	"github.com/AleksK1NG/api-mc/config"
-	"github.com/AleksK1NG/api-mc/internal/comments"
-	"github.com/AleksK1NG/api-mc/internal/models"
-	"github.com/AleksK1NG/api-mc/pkg/httpErrors"
-	"github.com/AleksK1NG/api-mc/pkg/logger"
-	"github.com/AleksK1NG/api-mc/pkg/utils"
+	"github.com/mahfuz110244/api-mc/config"
+	"github.com/mahfuz110244/api-mc/internal/comments"
+	"github.com/mahfuz110244/api-mc/internal/models"
+	"github.com/mahfuz110244/api-mc/pkg/httpErrors"
+	"github.com/mahfuz110244/api-mc/pkg/logger"
+	"github.com/mahfuz110244/api-mc/pkg/utils"
 )
 
 // Comments UseCase

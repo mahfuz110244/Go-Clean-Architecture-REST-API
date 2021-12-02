@@ -12,13 +12,13 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/stretchr/testify/require"
 
-	"github.com/AleksK1NG/api-mc/config"
-	"github.com/AleksK1NG/api-mc/internal/auth/mock"
-	"github.com/AleksK1NG/api-mc/internal/models"
-	mockSess "github.com/AleksK1NG/api-mc/internal/session/mock"
-	"github.com/AleksK1NG/api-mc/pkg/converter"
-	"github.com/AleksK1NG/api-mc/pkg/logger"
-	"github.com/AleksK1NG/api-mc/pkg/utils"
+	"github.com/mahfuz110244/api-mc/config"
+	"github.com/mahfuz110244/api-mc/internal/auth/mock"
+	"github.com/mahfuz110244/api-mc/internal/models"
+	mockSess "github.com/mahfuz110244/api-mc/internal/session/mock"
+	"github.com/mahfuz110244/api-mc/pkg/converter"
+	"github.com/mahfuz110244/api-mc/pkg/logger"
+	"github.com/mahfuz110244/api-mc/pkg/utils"
 )
 
 func TestAuthHandlers_Register(t *testing.T) {

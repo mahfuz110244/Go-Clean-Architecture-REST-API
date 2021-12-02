@@ -6,8 +6,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/AleksK1NG/api-mc/internal/models"
-	"github.com/AleksK1NG/api-mc/pkg/utils"
+	"github.com/mahfuz110244/api-mc/internal/models"
+	"github.com/mahfuz110244/api-mc/pkg/utils"
 )
 
 // Comments use case

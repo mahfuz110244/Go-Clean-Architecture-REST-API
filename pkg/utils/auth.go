@@ -3,8 +3,8 @@ package utils
 import (
 	"context"
 
-	"github.com/AleksK1NG/api-mc/pkg/httpErrors"
-	"github.com/AleksK1NG/api-mc/pkg/logger"
+	"github.com/mahfuz110244/api-mc/pkg/httpErrors"
+	"github.com/mahfuz110244/api-mc/pkg/logger"
 )
 
 // Validate is user from owner of content

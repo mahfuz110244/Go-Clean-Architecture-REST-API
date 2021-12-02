@@ -8,13 +8,13 @@ import (
 	jaegerlog "github.com/uber/jaeger-client-go/log"
 	"github.com/uber/jaeger-lib/metrics"
 
-	"github.com/AleksK1NG/api-mc/config"
-	"github.com/AleksK1NG/api-mc/internal/server"
-	"github.com/AleksK1NG/api-mc/pkg/db/aws"
-	"github.com/AleksK1NG/api-mc/pkg/db/postgres"
-	"github.com/AleksK1NG/api-mc/pkg/db/redis"
-	"github.com/AleksK1NG/api-mc/pkg/logger"
-	"github.com/AleksK1NG/api-mc/pkg/utils"
+	"github.com/mahfuz110244/api-mc/config"
+	"github.com/mahfuz110244/api-mc/internal/server"
+	"github.com/mahfuz110244/api-mc/pkg/db/aws"
+	"github.com/mahfuz110244/api-mc/pkg/db/postgres"
+	"github.com/mahfuz110244/api-mc/pkg/db/redis"
+	"github.com/mahfuz110244/api-mc/pkg/logger"
+	"github.com/mahfuz110244/api-mc/pkg/utils"
 
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
@@ -24,7 +24,7 @@ import (
 // @version 1.0
 // @description Example Golang REST API
 // @contact.name Alexander Bryksin
-// @contact.url https://github.com/AleksK1NG
+// @contact.url https://github.com/mahfuz110244
 // @contact.email alexander.bryksin@yandex.ru
 // @BasePath /api/v1
 func main() {

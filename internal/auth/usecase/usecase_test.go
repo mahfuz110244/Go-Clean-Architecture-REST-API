@@ -13,11 +13,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/AleksK1NG/api-mc/config"
-	"github.com/AleksK1NG/api-mc/internal/auth/mock"
-	"github.com/AleksK1NG/api-mc/internal/models"
-	"github.com/AleksK1NG/api-mc/pkg/logger"
-	"github.com/AleksK1NG/api-mc/pkg/utils"
+	"github.com/mahfuz110244/api-mc/config"
+	"github.com/mahfuz110244/api-mc/internal/auth/mock"
+	"github.com/mahfuz110244/api-mc/internal/models"
+	"github.com/mahfuz110244/api-mc/pkg/logger"
+	"github.com/mahfuz110244/api-mc/pkg/utils"
 )
 
 func TestAuthUC_Register(t *testing.T) {

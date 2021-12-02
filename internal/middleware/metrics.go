@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"github.com/AleksK1NG/api-mc/pkg/metric"
+	"github.com/mahfuz110244/api-mc/pkg/metric"
 )
 
 // Prometheus metrics middleware

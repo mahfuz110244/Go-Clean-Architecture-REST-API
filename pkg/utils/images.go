@@ -8,7 +8,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/AleksK1NG/api-mc/pkg/httpErrors"
+	"github.com/mahfuz110244/api-mc/pkg/httpErrors"
 )
 
 var allowedImagesContentType = map[string]string{

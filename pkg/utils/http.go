@@ -12,11 +12,11 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/pkg/errors"
 
-	"github.com/AleksK1NG/api-mc/config"
-	"github.com/AleksK1NG/api-mc/internal/models"
-	"github.com/AleksK1NG/api-mc/pkg/httpErrors"
-	"github.com/AleksK1NG/api-mc/pkg/logger"
-	"github.com/AleksK1NG/api-mc/pkg/sanitize"
+	"github.com/mahfuz110244/api-mc/config"
+	"github.com/mahfuz110244/api-mc/internal/models"
+	"github.com/mahfuz110244/api-mc/pkg/httpErrors"
+	"github.com/mahfuz110244/api-mc/pkg/logger"
+	"github.com/mahfuz110244/api-mc/pkg/sanitize"
 )
 
 // Get request id from echo context

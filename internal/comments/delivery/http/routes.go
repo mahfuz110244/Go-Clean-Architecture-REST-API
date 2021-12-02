@@ -3,8 +3,8 @@ package http
 import (
 	"github.com/labstack/echo/v4"
 
-	"github.com/AleksK1NG/api-mc/internal/comments"
-	"github.com/AleksK1NG/api-mc/internal/middleware"
+	"github.com/mahfuz110244/api-mc/internal/comments"
+	"github.com/mahfuz110244/api-mc/internal/middleware"
 )
 
 // Map comments routes

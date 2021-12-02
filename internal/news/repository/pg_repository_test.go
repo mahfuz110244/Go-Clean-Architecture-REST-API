@@ -9,7 +9,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/stretchr/testify/require"
 
-	"github.com/AleksK1NG/api-mc/internal/models"
+	"github.com/mahfuz110244/api-mc/internal/models"
 )
 
 func TestNewsRepo_Create(t *testing.T) {

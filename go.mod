@@ -1,4 +1,4 @@
-module github.com/AleksK1NG/api-mc
+module github.com/mahfuz110244/api-mc
 
 go 1.15
 

@@ -9,8 +9,8 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/pkg/errors"
 
-	"github.com/AleksK1NG/api-mc/internal/auth"
-	"github.com/AleksK1NG/api-mc/internal/models"
+	"github.com/mahfuz110244/api-mc/internal/auth"
+	"github.com/mahfuz110244/api-mc/internal/models"
 )
 
 // Auth AWS S3 repository

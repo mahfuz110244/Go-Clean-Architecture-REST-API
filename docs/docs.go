@@ -20,7 +20,7 @@ var doc = `{
         "title": "{{.Title}}",
         "contact": {
             "name": "Alexander Bryksin",
-            "url": "https://github.com/AleksK1NG",
+            "url": "https://github.com/mahfuz110244",
             "email": "alexander.bryksin@yandex.ru"
         },
         "version": "{{.Version}}"

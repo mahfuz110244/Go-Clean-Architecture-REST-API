@@ -6,10 +6,10 @@ package mock
 
 import (
 	context "context"
-	models "github.com/AleksK1NG/api-mc/internal/models"
-	utils "github.com/AleksK1NG/api-mc/pkg/utils"
 	gomock "github.com/golang/mock/gomock"
 	uuid "github.com/google/uuid"
+	models "github.com/mahfuz110244/api-mc/internal/models"
+	utils "github.com/mahfuz110244/api-mc/pkg/utils"
 	reflect "reflect"
 )
 

@@ -10,8 +10,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 
-	"github.com/AleksK1NG/api-mc/internal/auth"
-	"github.com/AleksK1NG/api-mc/internal/models"
+	"github.com/mahfuz110244/api-mc/internal/auth"
+	"github.com/mahfuz110244/api-mc/internal/models"
 )
 
 func SetupRedis() auth.RedisRepository {
