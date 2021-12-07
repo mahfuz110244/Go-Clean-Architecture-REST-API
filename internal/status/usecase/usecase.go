@@ -45,7 +45,8 @@ func (u *statusUC) Create(ctx context.Context, status *models.Status) (*models.S
 		return nil, httpErrors.NewUnauthorizedError(errors.WithMessage(err, "statusUC.Create.GetUserFromCtx"))
 	}
 
-	status.AuthorID = user.UserID
+	status.CreatedBy = user.UserID
+	status.UpdatedBy = user.UserID
 
 	if err = utils.ValidateStruct(ctx, status); err != nil {
 		return nil, httpErrors.NewBadRequestError(errors.WithMessage(err, "statusUC.Create.ValidateStruct"))
@@ -64,21 +65,21 @@ func (u *statusUC) Update(ctx context.Context, status *models.Status) (*models.S
 	span, ctx := opentracing.StartSpanFromContext(ctx, "statusUC.Update")
 	defer span.Finish()
 
-	statusByID, err := u.statusRepo.GetStatusByID(ctx, status.StatusID)
-	if err != nil {
-		return nil, err
-	}
+	// statusByID, err := u.statusRepo.GetStatusByID(ctx, status.ID)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	if err = utils.ValidateIsOwner(ctx, statusByID.AuthorID.String(), u.logger); err != nil {
-		return nil, httpErrors.NewRestError(http.StatusForbidden, "Forbidden", errors.Wrap(err, "statusUC.Update.ValidateIsOwner"))
-	}
+	// if err = utils.ValidateIsOwner(ctx, statusByID.AuthorID.String(), u.logger); err != nil {
+	// 	return nil, httpErrors.NewRestError(http.StatusForbidden, "Forbidden", errors.Wrap(err, "statusUC.Update.ValidateIsOwner"))
+	// }
 
 	updatedUser, err := u.statusRepo.Update(ctx, status)
 	if err != nil {
 		return nil, err
 	}
 
-	if err = u.redisRepo.DeleteStatusCtx(ctx, u.getKeyWithPrefix(status.StatusID.String())); err != nil {
+	if err = u.redisRepo.DeleteStatusCtx(ctx, u.getKeyWithPrefix(status.ID.String())); err != nil {
 		u.logger.Errorf("statusUC.Update.DeleteStatusCtx: %v", err)
 	}
 
@@ -120,7 +121,7 @@ func (u *statusUC) Delete(ctx context.Context, statusID uuid.UUID) error {
 		return err
 	}
 
-	if err = utils.ValidateIsOwner(ctx, statusByID.AuthorID.String(), u.logger); err != nil {
+	if err = utils.ValidateIsOwner(ctx, statusByID.CreatedBy.String(), u.logger); err != nil {
 		return httpErrors.NewRestError(http.StatusForbidden, "Forbidden", errors.Wrap(err, "statusUC.Delete.ValidateIsOwner"))
 	}
 

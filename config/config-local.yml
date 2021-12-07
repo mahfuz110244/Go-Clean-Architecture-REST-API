@@ -21,7 +21,7 @@ logger:
 
 postgres:
   PostgresqlHost: localhost
-  PostgresqlPort: 5432
+  PostgresqlPort: 5433
   PostgresqlUser: postgres
   PostgresqlPassword: postgres
   PostgresqlDbname: auth_db

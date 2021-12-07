@@ -81,7 +81,7 @@ func (h statusHandlers) Update() echo.HandlerFunc {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
 		}
-		n.StatusID = statusUUID
+		n.ID = statusUUID
 
 		updatedStatus, err := h.statusUC.Update(ctx, n)
 		if err != nil {

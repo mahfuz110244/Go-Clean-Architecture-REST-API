@@ -35,9 +35,10 @@ func TestStatusHandlers_Create(t *testing.T) {
 	userID := uuid.New()
 
 	status := &models.Status{
-		AuthorID: userID,
-		Title:    "TestStatusHandlers_Create title",
-		Content:  "TestStatusHandlers_Create title content some text content",
+		Name:        "estimate",
+		Description: "TestStatusHandlers_Create Description",
+		// CreatedBy:  "eef6841bf0ee41669721ee8e1ca5a996",
+		// UpdatedBy:  "eef6841b-f0ee-4166-9721-ee8e1ca5a996",
 	}
 
 	buf, err := converter.AnyToBytesBuffer(status)
@@ -60,9 +61,8 @@ func TestStatusHandlers_Create(t *testing.T) {
 	defer span.Finish()
 
 	mockStatus := &models.Status{
-		AuthorID: userID,
-		Title:    "TestStatusHandlers_Create title",
-		Content:  "TestStatusHandlers_Create title content asdasdsadsadadsad",
+		Name:        "estimate",
+		Description: "TestStatusHandlers_Create Description",
 	}
 
 	mockStatusUC.EXPECT().Create(ctxWithTrace, gomock.Any()).Return(mockStatus, nil)
@@ -86,9 +86,8 @@ func TestStatusHandlers_Update(t *testing.T) {
 	userID := uuid.New()
 
 	status := &models.Status{
-		AuthorID: userID,
-		Title:    "TestStatusHandlers_Create title",
-		Content:  "TestStatusHandlers_Create title content asdasdsadsadadsad",
+		Name:        "issued",
+		Description: "TestStatusHandlers_Update Description",
 	}
 
 	buf, err := converter.AnyToBytesBuffer(status)
@@ -113,9 +112,8 @@ func TestStatusHandlers_Update(t *testing.T) {
 	defer span.Finish()
 
 	mockStatus := &models.Status{
-		AuthorID: userID,
-		Title:    "TestStatusHandlers_Create title",
-		Content:  "TestStatusHandlers_Create title content asdasdsadsadadsad",
+		Name:        "issued",
+		Description: "TestStatusHandlers_Update Description",
 	}
 
 	mockStatusUC.EXPECT().Update(ctxWithTrace, gomock.Any()).Return(mockStatus, nil)
@@ -155,10 +153,9 @@ func TestStatusHandlers_GetByID(t *testing.T) {
 	defer span.Finish()
 
 	mockStatus := &models.StatusBase{
-		StatusID: statusID,
-		AuthorID: userID,
-		Title:    "TestStatusHandlers_Create title",
-		Content:  "TestStatusHandlers_Create title content asdasdsadsadadsad",
+		ID:          statusID,
+		Name:        "issued",
+		Description: "TestStatusHandlers_Update Description",
 	}
 
 	mockStatusUC.EXPECT().GetStatusByID(ctxWithTrace, statusID).Return(mockStatus, nil)

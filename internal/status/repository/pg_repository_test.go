@@ -25,25 +25,28 @@ func TestStatusRepo_Create(t *testing.T) {
 	statusRepo := NewStatusRepository(sqlxDB)
 
 	t.Run("Create", func(t *testing.T) {
-		authorUID := uuid.New()
-		title := "title"
-		content := "content"
+		userUID := uuid.New()
+		name := "estmate"
+		description := "Description"
+		created_by := userUID
+		updated_by := userUID
 
-		rows := sqlmock.NewRows([]string{"author_id", "title", "content"}).AddRow(authorUID, title, content)
+		rows := sqlmock.NewRows([]string{"name", "description", "created_by", "updated_by"}).AddRow(name, description, created_by, updated_by)
 
 		status := &models.Status{
-			AuthorID: authorUID,
-			Title:    title,
-			Content:  content,
+			Name:        name,
+			Description: description,
+			CreatedBy:   created_by,
+			UpdatedBy:   updated_by,
 		}
 
-		mock.ExpectQuery(createStatus).WithArgs(status.AuthorID, status.Title, status.Content, status.Category).WillReturnRows(rows)
+		mock.ExpectQuery(createStatus).WithArgs(status.Name, status.Description).WillReturnRows(rows)
 
 		createdStatus, err := statusRepo.Create(context.Background(), status)
 
 		require.NoError(t, err)
 		require.NotNil(t, createdStatus)
-		require.Equal(t, status.Title, createdStatus.Title)
+		require.Equal(t, status.Name, createdStatus.Name)
 	})
 }
 
@@ -61,22 +64,20 @@ func TestStatusRepo_Update(t *testing.T) {
 
 	t.Run("Update", func(t *testing.T) {
 		statusUID := uuid.New()
-		title := "title"
-		content := "content"
+		name := "estmate"
+		description := "Description"
 
-		rows := sqlmock.NewRows([]string{"status_id", "title", "content"}).AddRow(statusUID, title, content)
+		rows := sqlmock.NewRows([]string{"id", "name", "description"}).AddRow(statusUID, name, description)
 
 		status := &models.Status{
-			StatusID: statusUID,
-			Title:    title,
-			Content:  content,
+			ID:          statusUID,
+			Name:        name,
+			Description: description,
 		}
 
-		mock.ExpectQuery(updateStatus).WithArgs(status.Title,
-			status.Content,
-			status.ImageURL,
-			status.Category,
-			status.StatusID,
+		mock.ExpectQuery(updateStatus).WithArgs(status.Name,
+			status.Description,
+			status.ID,
 		).WillReturnRows(rows)
 
 		updatedStatus, err := statusRepo.Update(context.Background(), status)

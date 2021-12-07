@@ -8,8 +8,10 @@ const (
 	updateStatus = `UPDATE status 
 					SET name = $1, name),
 					description = $2, description),
-					updated_by = $3, updated_by)
-					WHERE id = $4
+					active = $3, active),
+					order_number = $4, order_number),
+					updated_by = $5, updated_by)
+					WHERE id = $6
 					RETURNING *`
 
 	getStatusByID = `SELECT n.id,
@@ -29,9 +31,9 @@ const (
 
 	getTotalCount = `SELECT COUNT(id) FROM status`
 
-	getStatus = `SELECT status_id, author_id, title, content, image_url, category, updated_at, created_at 
+	getStatus = `SELECT id, created_by, updated_by, created_at, updated_at, deleted_at, updated_at, name, description, active, order_number
 				FROM status 
-				ORDER BY created_at, updated_at OFFSET $1 LIMIT $2`
+				ORDER BY order_number, created_at, updated_at OFFSET $1 LIMIT $2`
 
 	findByTitleCount = `SELECT COUNT(*)
 					FROM status

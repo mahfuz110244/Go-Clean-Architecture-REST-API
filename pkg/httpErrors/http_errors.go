@@ -11,14 +11,15 @@ import (
 )
 
 const (
-	ErrBadRequest         = "Bad request"
-	ErrEmailAlreadyExists = "User with given email already exists"
-	ErrNoSuchUser         = "User not found"
-	ErrWrongCredentials   = "Wrong Credentials"
-	ErrNotFound           = "Not Found"
-	ErrUnauthorized       = "Unauthorized"
-	ErrForbidden          = "Forbidden"
-	ErrBadQueryParams     = "Invalid query params"
+	ErrBadRequest          = "Bad request"
+	ErrEmailAlreadyExists  = "User with given email already exists"
+	ErrCommonAlreadyExists = "This Type already exists"
+	ErrNoSuchUser          = "User not found"
+	ErrWrongCredentials    = "Wrong Credentials"
+	ErrNotFound            = "Not Found"
+	ErrUnauthorized        = "Unauthorized"
+	ErrForbidden           = "Forbidden"
+	ErrBadQueryParams      = "Invalid query params"
 )
 
 var (
@@ -36,6 +37,7 @@ var (
 	InternalServerError   = errors.New("Internal Server Error")
 	RequestTimeoutError   = errors.New("Request Timeout")
 	ExistsEmailError      = errors.New("User with given email already exists")
+	ExistsTypeError       = errors.New(ErrCommonAlreadyExists)
 	InvalidJWTToken       = errors.New("Invalid JWT token")
 	InvalidJWTClaims      = errors.New("Invalid JWT claims")
 	NotAllowedImageHeader = errors.New("Not allowed image header")
@@ -174,6 +176,10 @@ func ParseErrors(err error) RestErr {
 }
 
 func parseSqlErrors(err error) RestErr {
+	if strings.Contains(err.Error(), "status_name_key") {
+		return NewRestError(http.StatusBadRequest, ExistsTypeError.Error(), err)
+	}
+
 	if strings.Contains(err.Error(), "23505") {
 		return NewRestError(http.StatusBadRequest, ExistsEmailError.Error(), err)
 	}

@@ -55,3 +55,19 @@ CREATE TABLE comments
 );
 
 CREATE INDEX IF NOT EXISTS news_title_id_idx ON news (title);
+
+-- Create sales order status setting Table
+CREATE TYPE status_enum AS ENUM ('estimate', 'issued', 'in_progress', 'fulfilled', 'closed_short', 'void', 'expired');
+CREATE TABLE IF NOT EXISTS status (
+	id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	deleted_at TIMESTAMP,
+	created_by VARCHAR (36),
+	updated_by VARCHAR (36),
+	name status_enum,
+	description VARCHAR (255),
+	active BOOLEAN NOT NULL DEFAULT TRUE,
+	order_no smallint DEFAULT 0,
+	UNIQUE(name)
+);

@@ -22,6 +22,11 @@ import (
 	newsHttp "github.com/mahfuz110244/api-mc/internal/news/delivery/http"
 	newsRepository "github.com/mahfuz110244/api-mc/internal/news/repository"
 	newsUseCase "github.com/mahfuz110244/api-mc/internal/news/usecase"
+
+	statusHttp "github.com/mahfuz110244/api-mc/internal/status/delivery/http"
+	statusRepository "github.com/mahfuz110244/api-mc/internal/status/repository"
+	statusUseCase "github.com/mahfuz110244/api-mc/internal/status/usecase"
+
 	sessionRepository "github.com/mahfuz110244/api-mc/internal/session/repository"
 	"github.com/mahfuz110244/api-mc/internal/session/usecase"
 	"github.com/mahfuz110244/api-mc/pkg/metric"
@@ -44,21 +49,25 @@ func (s *Server) MapHandlers(e *echo.Echo) error {
 	aRepo := authRepository.NewAuthRepository(s.db)
 	nRepo := newsRepository.NewNewsRepository(s.db)
 	cRepo := commentsRepository.NewCommentsRepository(s.db)
+	statusRepo := statusRepository.NewStatusRepository(s.db)
 	sRepo := sessionRepository.NewSessionRepository(s.redisClient, s.cfg)
 	aAWSRepo := authRepository.NewAuthAWSRepository(s.awsClient)
 	authRedisRepo := authRepository.NewAuthRedisRepo(s.redisClient)
 	newsRedisRepo := newsRepository.NewNewsRedisRepo(s.redisClient)
+	statusRedisRepo := statusRepository.NewStatusRedisRepo(s.redisClient)
 
 	// Init useCases
 	authUC := authUseCase.NewAuthUseCase(s.cfg, aRepo, authRedisRepo, aAWSRepo, s.logger)
 	newsUC := newsUseCase.NewNewsUseCase(s.cfg, nRepo, newsRedisRepo, s.logger)
 	commUC := commentsUseCase.NewCommentsUseCase(s.cfg, cRepo, s.logger)
+	statusUC := statusUseCase.NewStatusUseCase(s.cfg, statusRepo, statusRedisRepo, s.logger)
 	sessUC := usecase.NewSessionUseCase(sRepo, s.cfg)
 
 	// Init handlers
 	authHandlers := authHttp.NewAuthHandlers(s.cfg, authUC, sessUC, s.logger)
 	newsHandlers := newsHttp.NewNewsHandlers(s.cfg, newsUC, s.logger)
 	commHandlers := commentsHttp.NewCommentsHandlers(s.cfg, commUC, s.logger)
+	statusHandlers := statusHttp.NewStatusHandlers(s.cfg, statusUC, s.logger)
 
 	mw := apiMiddlewares.NewMiddlewareManager(sessUC, authUC, s.cfg, []string{"*"}, s.logger)
 
@@ -101,10 +110,12 @@ func (s *Server) MapHandlers(e *echo.Echo) error {
 	authGroup := v1.Group("/auth")
 	newsGroup := v1.Group("/news")
 	commGroup := v1.Group("/comments")
+	statusGroup := v1.Group("/status")
 
 	authHttp.MapAuthRoutes(authGroup, authHandlers, mw)
 	newsHttp.MapNewsRoutes(newsGroup, newsHandlers, mw)
 	commentsHttp.MapCommentsRoutes(commGroup, commHandlers, mw)
+	statusHttp.MapStatusRoutes(statusGroup, statusHandlers, mw)
 
 	health.GET("", func(c echo.Context) error {
 		s.logger.Infof("Health check RequestID: %s", utils.GetRequestID(c))

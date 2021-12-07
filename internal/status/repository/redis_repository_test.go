@@ -36,9 +36,9 @@ func TestStatusRedisRepo_SetStatusCtx(t *testing.T) {
 		statusUID := uuid.New()
 		key := "key"
 		n := &models.StatusBase{
-			StatusID: statusUID,
-			Title:    "Title",
-			Content:  "Content",
+			ID:          statusUID,
+			Name:        "estimate",
+			Description: "estimate",
 		}
 
 		err := statusRedisRepo.SetStatusCtx(context.Background(), key, 10, n)
@@ -56,9 +56,9 @@ func TestStatusRedisRepo_GetStatusByIDCtx(t *testing.T) {
 		statusUID := uuid.New()
 		key := "key"
 		n := &models.StatusBase{
-			StatusID: statusUID,
-			Title:    "Title",
-			Content:  "Content",
+			ID:          statusUID,
+			Name:        "estimate",
+			Description: "estimate",
 		}
 
 		statusBase, err := statusRedisRepo.GetStatusByIDCtx(context.Background(), key)
