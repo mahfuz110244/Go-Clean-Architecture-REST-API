@@ -40,7 +40,7 @@ func TestStatusRepo_Create(t *testing.T) {
 			UpdatedBy:   updated_by,
 		}
 
-		mock.ExpectQuery(createStatus).WithArgs(status.Name, status.Description).WillReturnRows(rows)
+		mock.ExpectQuery(createStatus).WithArgs(status.Name, status.Description, status.CreatedBy, status.UpdatedBy).WillReturnRows(rows)
 
 		createdStatus, err := statusRepo.Create(context.Background(), status)
 
@@ -64,19 +64,26 @@ func TestStatusRepo_Update(t *testing.T) {
 
 	t.Run("Update", func(t *testing.T) {
 		statusUID := uuid.New()
-		name := "estmate"
 		description := "Description"
+		order_number := 6
+		active := true
+		updated_by := statusUID
 
-		rows := sqlmock.NewRows([]string{"id", "name", "description"}).AddRow(statusUID, name, description)
+		rows := sqlmock.NewRows([]string{"id", "description", "order_number", "active", "updated_by"}).AddRow(statusUID, description, order_number, active, updated_by)
 
 		status := &models.Status{
 			ID:          statusUID,
-			Name:        name,
 			Description: description,
+			OrderNumber: order_number,
+			Active:      active,
+			UpdatedBy:   updated_by,
 		}
 
-		mock.ExpectQuery(updateStatus).WithArgs(status.Name,
+		mock.ExpectQuery(updateStatus).WithArgs(
 			status.Description,
+			status.Active,
+			status.OrderNumber,
+			status.UpdatedBy,
 			status.ID,
 		).WillReturnRows(rows)
 

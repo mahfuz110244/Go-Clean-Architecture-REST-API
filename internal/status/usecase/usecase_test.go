@@ -69,15 +69,6 @@ func TestStatusUC_Update(t *testing.T) {
 		CreatedBy:   userUID,
 		UpdatedBy:   userUID,
 	}
-
-	status := &models.Status{
-		ID:          statusUID,
-		Name:        "estimate",
-		Description: "estimate",
-		CreatedBy:   userUID,
-		UpdatedBy:   userUID,
-	}
-
 	user := &models.User{
 		UserID: userUID,
 	}
