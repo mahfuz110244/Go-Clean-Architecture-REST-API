@@ -71,3 +71,29 @@ CREATE TABLE IF NOT EXISTS status (
 	order_no smallint DEFAULT 0,
 	UNIQUE(name)
 );
+
+
+-- Step 1: Create trigger Function
+CREATE OR REPLACE FUNCTION trigger_set_update_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Step 2: Then create a trigger for each table that has the column updated_at
+DO $$
+DECLARE
+    t text;
+BEGIN
+    FOR t IN
+        SELECT table_name FROM information_schema.columns WHERE column_name = 'updated_at'
+    LOOP
+        EXECUTE format('CREATE TRIGGER trigger_set_update_timestamp
+                    BEFORE UPDATE ON %I
+                    FOR EACH ROW EXECUTE PROCEDURE trigger_set_update_timestamp()', t,t);
+    END loop;
+END;
+$$ language 'plpgsql';

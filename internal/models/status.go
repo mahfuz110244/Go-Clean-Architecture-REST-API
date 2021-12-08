@@ -29,15 +29,3 @@ type StatusList struct {
 	HasMore    bool      `json:"has_more"`
 	Status     []*Status `json:"data"`
 }
-
-// Status base
-type StatusBase struct {
-	ID          uuid.UUID `json:"id" db:"id" validate:"omitempty,uuid"`
-	Name        string    `json:"name" db:"name" validate:"required,gte=10"`
-	Description string    `json:"description" db:"description" validate:"required,gte=255"`
-	Active      bool      `json:"active" db:"active" validate:"omitempty"`
-	OrderNumber int       `json:"order_number" db:"order_number" validate:"omitempty"`
-	UpdatedAt   time.Time `json:"updated_at,omitempty" db:"updated_at"`
-	CreatedBy   uuid.UUID `json:"created_by" db:"created_by" validate:"omitempty,uuid"`
-	UpdatedBy   uuid.UUID `json:"updated_by" db:"updated_by" validate:"omitempty,uuid"`
-}

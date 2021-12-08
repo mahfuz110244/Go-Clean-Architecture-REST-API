@@ -86,8 +86,9 @@ func TestStatusHandlers_Update(t *testing.T) {
 	userID := uuid.New()
 
 	status := &models.Status{
-		Name:        "issued",
 		Description: "TestStatusHandlers_Update Description",
+		OrderNumber: 7,
+		Active:      true,
 	}
 
 	buf, err := converter.AnyToBytesBuffer(status)
@@ -112,8 +113,9 @@ func TestStatusHandlers_Update(t *testing.T) {
 	defer span.Finish()
 
 	mockStatus := &models.Status{
-		Name:        "issued",
 		Description: "TestStatusHandlers_Update Description",
+		OrderNumber: 7,
+		Active:      true,
 	}
 
 	mockStatusUC.EXPECT().Update(ctxWithTrace, gomock.Any()).Return(mockStatus, nil)
@@ -152,7 +154,7 @@ func TestStatusHandlers_GetByID(t *testing.T) {
 	span, ctxWithTrace := opentracing.StartSpanFromContext(ctxWithReqID, "statusHandlers.GetByID")
 	defer span.Finish()
 
-	mockStatus := &models.StatusBase{
+	mockStatus := &models.Status{
 		ID:          statusID,
 		Name:        "issued",
 		Description: "TestStatusHandlers_Update Description",

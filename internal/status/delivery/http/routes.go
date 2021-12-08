@@ -11,9 +11,9 @@ import (
 func MapStatusRoutes(statusGroup *echo.Group, h status.Handlers, mw *middleware.MiddlewareManager) {
 	// statusGroup.POST("/create", h.Create(), mw.AuthSessionMiddleware, mw.CSRF)
 	statusGroup.POST("", h.Create(), mw.AuthSessionMiddleware)
-	statusGroup.PUT("/:status_id", h.Update(), mw.AuthSessionMiddleware)
-	statusGroup.DELETE("/:status_id", h.Delete(), mw.AuthSessionMiddleware)
-	statusGroup.GET("/:status_id", h.GetByID())
+	statusGroup.PUT("/:id", h.Update(), mw.AuthSessionMiddleware)
+	statusGroup.DELETE("/:id", h.Delete(), mw.AuthSessionMiddleware)
+	statusGroup.GET("/:id", h.GetByID())
 	statusGroup.GET("/search", h.SearchByTitle())
 	statusGroup.GET("", h.GetStatus())
 }

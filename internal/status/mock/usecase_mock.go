@@ -82,10 +82,10 @@ func (mr *MockUseCaseMockRecorder) GetStatus(ctx, pq interface{}) *gomock.Call {
 }
 
 // GetStatusByID mocks base method.
-func (m *MockUseCase) GetStatusByID(ctx context.Context, statusID uuid.UUID) (*models.StatusBase, error) {
+func (m *MockUseCase) GetStatusByID(ctx context.Context, statusID uuid.UUID) (*models.Status, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetStatusByID", ctx, statusID)
-	ret0, _ := ret[0].(*models.StatusBase)
+	ret0, _ := ret[0].(*models.Status)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

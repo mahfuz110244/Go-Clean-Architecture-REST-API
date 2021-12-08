@@ -9,7 +9,7 @@ import (
 
 // Status redis repository
 type RedisRepository interface {
-	GetStatusByIDCtx(ctx context.Context, key string) (*models.StatusBase, error)
-	SetStatusCtx(ctx context.Context, key string, seconds int, status *models.StatusBase) error
+	GetStatusByIDCtx(ctx context.Context, key string) (*models.Status, error)
+	SetStatusCtx(ctx context.Context, key string, seconds int, status *models.Status) error
 	DeleteStatusCtx(ctx context.Context, key string) error
 }

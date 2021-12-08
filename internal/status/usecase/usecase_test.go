@@ -70,7 +70,7 @@ func TestStatusUC_Update(t *testing.T) {
 		UpdatedBy:   userUID,
 	}
 
-	statusBase := &models.StatusBase{
+	status := &models.Status{
 		ID:          statusUID,
 		Name:        "estimate",
 		Description: "estimate",
@@ -88,7 +88,7 @@ func TestStatusUC_Update(t *testing.T) {
 	span, ctxWithTrace := opentracing.StartSpanFromContext(ctx, "statusUC.Update")
 	defer span.Finish()
 
-	mockStatusRepo.EXPECT().GetStatusByID(ctxWithTrace, gomock.Eq(status.ID)).Return(statusBase, nil)
+	mockStatusRepo.EXPECT().GetStatusByID(ctxWithTrace, gomock.Eq(status.ID)).Return(status, nil)
 	mockStatusRepo.EXPECT().Update(ctxWithTrace, gomock.Eq(status)).Return(status, nil)
 	mockRedisRepo.EXPECT().DeleteStatusCtx(ctxWithTrace, gomock.Eq(cacheKey)).Return(nil)
 
@@ -110,7 +110,7 @@ func TestStatusUC_GetStatusByID(t *testing.T) {
 	statusUC := NewStatusUseCase(nil, mockStatusRepo, mockRedisRepo, apiLogger)
 
 	statusUID := uuid.New()
-	statusBase := &models.StatusBase{
+	status := &models.Status{
 		ID: statusUID,
 	}
 	ctx := context.Background()
@@ -119,10 +119,10 @@ func TestStatusUC_GetStatusByID(t *testing.T) {
 	cacheKey := fmt.Sprintf("%s: %s", basePrefix, statusUID)
 
 	mockRedisRepo.EXPECT().GetStatusByIDCtx(ctxWithTrace, gomock.Eq(cacheKey)).Return(nil, nil)
-	mockStatusRepo.EXPECT().GetStatusByID(ctxWithTrace, gomock.Eq(statusUID)).Return(statusBase, nil)
-	mockRedisRepo.EXPECT().SetStatusCtx(ctxWithTrace, cacheKey, cacheDuration, statusBase).Return(nil)
+	mockStatusRepo.EXPECT().GetStatusByID(ctxWithTrace, gomock.Eq(statusUID)).Return(status, nil)
+	mockRedisRepo.EXPECT().SetStatusCtx(ctxWithTrace, cacheKey, cacheDuration, status).Return(nil)
 
-	statusByID, err := statusUC.GetStatusByID(ctx, statusBase.ID)
+	statusByID, err := statusUC.GetStatusByID(ctx, status.ID)
 	require.NoError(t, err)
 	require.Nil(t, err)
 	require.NotNil(t, statusByID)
@@ -141,7 +141,7 @@ func TestStatusUC_Delete(t *testing.T) {
 
 	statusUID := uuid.New()
 	userUID := uuid.New()
-	statusBase := &models.StatusBase{
+	status := &models.Status{
 		ID: statusUID,
 	}
 	cacheKey := fmt.Sprintf("%s: %s", basePrefix, statusUID)
@@ -154,11 +154,11 @@ func TestStatusUC_Delete(t *testing.T) {
 	span, ctxWithTrace := opentracing.StartSpanFromContext(ctx, "statusUC.Delete")
 	defer span.Finish()
 
-	mockStatusRepo.EXPECT().GetStatusByID(ctxWithTrace, gomock.Eq(statusBase.ID)).Return(statusBase, nil)
+	mockStatusRepo.EXPECT().GetStatusByID(ctxWithTrace, gomock.Eq(status.ID)).Return(status, nil)
 	mockStatusRepo.EXPECT().Delete(ctxWithTrace, gomock.Eq(statusUID)).Return(nil)
 	mockRedisRepo.EXPECT().DeleteStatusCtx(ctxWithTrace, gomock.Eq(cacheKey)).Return(nil)
 
-	err := statusUC.Delete(ctx, statusBase.ID)
+	err := statusUC.Delete(ctx, status.ID)
 	require.NoError(t, err)
 	require.Nil(t, err)
 }

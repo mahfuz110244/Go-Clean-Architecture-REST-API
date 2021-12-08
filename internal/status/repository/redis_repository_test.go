@@ -35,7 +35,7 @@ func TestStatusRedisRepo_SetStatusCtx(t *testing.T) {
 	t.Run("SetStatusCtx", func(t *testing.T) {
 		statusUID := uuid.New()
 		key := "key"
-		n := &models.StatusBase{
+		n := &models.Status{
 			ID:          statusUID,
 			Name:        "estimate",
 			Description: "estimate",
@@ -55,24 +55,24 @@ func TestStatusRedisRepo_GetStatusByIDCtx(t *testing.T) {
 	t.Run("GetStatusByIDCtx", func(t *testing.T) {
 		statusUID := uuid.New()
 		key := "key"
-		n := &models.StatusBase{
+		n := &models.Status{
 			ID:          statusUID,
 			Name:        "estimate",
 			Description: "estimate",
 		}
 
-		statusBase, err := statusRedisRepo.GetStatusByIDCtx(context.Background(), key)
-		require.Nil(t, statusBase)
+		status, err := statusRedisRepo.GetStatusByIDCtx(context.Background(), key)
+		require.Nil(t, status)
 		require.NotNil(t, err)
 
 		err = statusRedisRepo.SetStatusCtx(context.Background(), key, 10, n)
 		require.NoError(t, err)
 		require.Nil(t, err)
 
-		statusBase, err = statusRedisRepo.GetStatusByIDCtx(context.Background(), key)
+		status, err = statusRedisRepo.GetStatusByIDCtx(context.Background(), key)
 		require.NoError(t, err)
 		require.Nil(t, err)
-		require.NotNil(t, statusBase)
+		require.NotNil(t, status)
 	})
 }
 

@@ -6,12 +6,11 @@ const (
 					RETURNING *`
 
 	updateStatus = `UPDATE status 
-					SET name = $1, name),
-					description = $2, description),
-					active = $3, active),
-					order_number = $4, order_number),
-					updated_by = $5, updated_by)
-					WHERE id = $6
+					SET description = $1,
+						active = $2,
+						order_number = $3,
+						updated_by = $4
+					WHERE id = $5
 					RETURNING *`
 
 	getStatusByID = `SELECT n.id,
@@ -25,7 +24,7 @@ const (
 							n.active,
 							n.order_number
 					FROM status n
-					WHERE status_id = $1`
+					WHERE id = $1`
 
 	deleteStatus = `UPDATE status
 					SET deleted_at = CURRENT_TIMESTAMP

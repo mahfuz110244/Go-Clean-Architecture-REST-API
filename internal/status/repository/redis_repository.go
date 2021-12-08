@@ -24,7 +24,7 @@ func NewStatusRedisRepo(redisClient *redis.Client) status.RedisRepository {
 }
 
 // Get new by id
-func (n *statusRedisRepo) GetStatusByIDCtx(ctx context.Context, key string) (*models.StatusBase, error) {
+func (n *statusRedisRepo) GetStatusByIDCtx(ctx context.Context, key string) (*models.Status, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "statusRedisRepo.GetStatusByIDCtx")
 	defer span.Finish()
 
@@ -32,16 +32,16 @@ func (n *statusRedisRepo) GetStatusByIDCtx(ctx context.Context, key string) (*mo
 	if err != nil {
 		return nil, errors.Wrap(err, "statusRedisRepo.GetStatusByIDCtx.redisClient.Get")
 	}
-	statusBase := &models.StatusBase{}
-	if err = json.Unmarshal(statusBytes, statusBase); err != nil {
+	status := &models.Status{}
+	if err = json.Unmarshal(statusBytes, status); err != nil {
 		return nil, errors.Wrap(err, "statusRedisRepo.GetStatusByIDCtx.json.Unmarshal")
 	}
 
-	return statusBase, nil
+	return status, nil
 }
 
 // Cache status item
-func (n *statusRedisRepo) SetStatusCtx(ctx context.Context, key string, seconds int, status *models.StatusBase) error {
+func (n *statusRedisRepo) SetStatusCtx(ctx context.Context, key string, seconds int, status *models.Status) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "statusRedisRepo.SetStatusCtx")
 	defer span.Finish()
 

@@ -50,10 +50,10 @@ func (mr *MockRedisRepositoryMockRecorder) DeleteStatusCtx(ctx, key interface{})
 }
 
 // GetStatusByIDCtx mocks base method.
-func (m *MockRedisRepository) GetStatusByIDCtx(ctx context.Context, key string) (*models.StatusBase, error) {
+func (m *MockRedisRepository) GetStatusByIDCtx(ctx context.Context, key string) (*models.Status, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetStatusByIDCtx", ctx, key)
-	ret0, _ := ret[0].(*models.StatusBase)
+	ret0, _ := ret[0].(*models.Status)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -65,7 +65,7 @@ func (mr *MockRedisRepositoryMockRecorder) GetStatusByIDCtx(ctx, key interface{}
 }
 
 // SetStatusCtx mocks base method.
-func (m *MockRedisRepository) SetStatusCtx(ctx context.Context, key string, seconds int, status *models.StatusBase) error {
+func (m *MockRedisRepository) SetStatusCtx(ctx context.Context, key string, seconds int, status *models.Status) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SetStatusCtx", ctx, key, seconds, status)
 	ret0, _ := ret[0].(error)

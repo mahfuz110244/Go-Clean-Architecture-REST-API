@@ -53,7 +53,6 @@ func (r *statusRepo) Update(ctx context.Context, status *models.Status) (*models
 	if err := r.db.QueryRowxContext(
 		ctx,
 		updateStatus,
-		&status.Name,
 		&status.Description,
 		&status.Active,
 		&status.OrderNumber,
@@ -67,11 +66,11 @@ func (r *statusRepo) Update(ctx context.Context, status *models.Status) (*models
 }
 
 // Get single status by id
-func (r *statusRepo) GetStatusByID(ctx context.Context, statusID uuid.UUID) (*models.StatusBase, error) {
+func (r *statusRepo) GetStatusByID(ctx context.Context, statusID uuid.UUID) (*models.Status, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "statusRepo.GetStatusByID")
 	defer span.Finish()
 
-	n := &models.StatusBase{}
+	n := &models.Status{}
 	if err := r.db.GetContext(ctx, n, getStatusByID, statusID); err != nil {
 		return nil, errors.Wrap(err, "statusRepo.GetStatusByID.GetContext")
 	}

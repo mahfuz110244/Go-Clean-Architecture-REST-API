@@ -70,7 +70,7 @@ func (h statusHandlers) Update() echo.HandlerFunc {
 		span, ctx := opentracing.StartSpanFromContext(utils.GetRequestCtx(c), "statusHandlers.Update")
 		defer span.Finish()
 
-		statusUUID, err := uuid.Parse(c.Param("status_id"))
+		statusUUID, err := uuid.Parse(c.Param("id"))
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
@@ -107,7 +107,7 @@ func (h statusHandlers) GetByID() echo.HandlerFunc {
 		span, ctx := opentracing.StartSpanFromContext(utils.GetRequestCtx(c), "statusHandlers.GetByID")
 		defer span.Finish()
 
-		statusUUID, err := uuid.Parse(c.Param("status_id"))
+		statusUUID, err := uuid.Parse(c.Param("id"))
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
@@ -137,7 +137,7 @@ func (h statusHandlers) Delete() echo.HandlerFunc {
 		span, ctx := opentracing.StartSpanFromContext(utils.GetRequestCtx(c), "statusHandlers.Delete")
 		defer span.Finish()
 
-		statusUUID, err := uuid.Parse(c.Param("status_id"))
+		statusUUID, err := uuid.Parse(c.Param("id"))
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
