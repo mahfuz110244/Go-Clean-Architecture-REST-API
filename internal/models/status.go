@@ -27,7 +27,7 @@ type StatusList struct {
 	Page       int       `json:"page"`
 	Size       int       `json:"size"`
 	HasMore    bool      `json:"has_more"`
-	Status     []*Status `json:"sales_order_status_setting"`
+	Status     []*Status `json:"data"`
 }
 
 // Status base

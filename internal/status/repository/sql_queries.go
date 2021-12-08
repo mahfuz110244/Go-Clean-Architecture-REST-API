@@ -27,12 +27,15 @@ const (
 					FROM status n
 					WHERE status_id = $1`
 
-	deleteStatus = `DELETE FROM status WHERE id = $1`
+	deleteStatus = `UPDATE status
+					SET deleted_at = CURRENT_TIMESTAMP
+					WHERE id = $1`
 
-	getTotalCount = `SELECT COUNT(id) FROM status`
+	getTotalCount = `SELECT COUNT(id) FROM status WHERE deleted_at IS NULL`
 
 	getStatus = `SELECT id, created_by, updated_by, created_at, updated_at, deleted_at, updated_at, name, description, active, order_number
 				FROM status 
+				WHERE deleted_at IS NULL
 				ORDER BY order_number, created_at, updated_at OFFSET $1 LIMIT $2`
 
 	findByTitleCount = `SELECT COUNT(*)

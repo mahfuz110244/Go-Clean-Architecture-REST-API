@@ -52,6 +52,7 @@ swaggo:
 # Main
 
 run:
+	go build ./cmd/api/main.go
 	go run ./cmd/api/main.go
 
 build:
