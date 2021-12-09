@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -100,7 +101,7 @@ func (r *statusRepo) Delete(ctx context.Context, statusID uuid.UUID) error {
 }
 
 // Get status
-func (r *statusRepo) GetStatus(ctx context.Context, pq *utils.PaginationQuery) (*models.StatusList, error) {
+func (r *statusRepo) GetStatus(ctx context.Context, params *models.StatusParams, pq *utils.PaginationQuery) (*models.StatusList, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "statusRepo.GetStatus")
 	defer span.Finish()
 
@@ -121,6 +122,15 @@ func (r *statusRepo) GetStatus(ctx context.Context, pq *utils.PaginationQuery) (
 	}
 
 	var statusList = make([]*models.StatusBase, 0, pq.GetSize())
+	if params != nil {
+		fmt.Println(params)
+		fmt.Println(params.ID == "")
+		fmt.Println(params.Name == "")
+	}
+	// getStatus := `SELECT id, name, description, active, order_number
+	// FROM status 
+	// WHERE deleted_at IS NULL
+	// ORDER BY order_number, created_at, updated_at OFFSET $1 LIMIT $2`
 	rows, err := r.db.QueryxContext(ctx, getStatus, pq.GetOffset(), pq.GetLimit())
 	if err != nil {
 		return nil, errors.Wrap(err, "statusRepo.GetStatus.QueryxContext")

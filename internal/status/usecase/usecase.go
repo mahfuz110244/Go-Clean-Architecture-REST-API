@@ -147,11 +147,11 @@ func (u *statusUC) Delete(ctx context.Context, statusID uuid.UUID) error {
 }
 
 // Get status
-func (u *statusUC) GetStatus(ctx context.Context, pq *utils.PaginationQuery) (*models.StatusList, error) {
+func (u *statusUC) GetStatus(ctx context.Context, params *models.StatusParams, pq *utils.PaginationQuery) (*models.StatusList, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "statusUC.GetStatus")
 	defer span.Finish()
 
-	return u.statusRepo.GetStatus(ctx, pq)
+	return u.statusRepo.GetStatus(ctx, params, pq)
 }
 
 // Find nes by title

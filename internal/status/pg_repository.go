@@ -16,6 +16,6 @@ type Repository interface {
 	Update(ctx context.Context, status *models.Status) (*models.Status, error)
 	GetStatusByID(ctx context.Context, statusID uuid.UUID) (*models.Status, error)
 	Delete(ctx context.Context, statusID uuid.UUID) error
-	GetStatus(ctx context.Context, pq *utils.PaginationQuery) (*models.StatusList, error)
+	GetStatus(ctx context.Context, params *models.StatusParams, pq *utils.PaginationQuery) (*models.StatusList, error)
 	SearchByTitle(ctx context.Context, title string, query *utils.PaginationQuery) (*models.StatusList, error)
 }

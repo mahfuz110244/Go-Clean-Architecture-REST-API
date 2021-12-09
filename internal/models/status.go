@@ -29,6 +29,15 @@ type StatusBase struct {
 	OrderNumber int       `json:"order_number" db:"order_number" validate:"omitempty"`
 }
 
+// Status Params model
+type StatusParams struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Active      string `json:"active"`
+	OrderNumber string `json:"order_number"`
+}
+
 // All Status response
 type StatusList struct {
 	TotalCount int           `json:"total_count"`
