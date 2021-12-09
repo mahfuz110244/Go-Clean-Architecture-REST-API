@@ -20,12 +20,21 @@ type Status struct {
 	OrderNumber int        `json:"order_number" db:"order_number" validate:"omitempty"`
 }
 
+// Status List model
+type StatusBase struct {
+	ID          uuid.UUID `json:"id" db:"id" validate:"omitempty,uuid"`
+	Name        string    `json:"name" db:"name" validate:"required,lte=36"`
+	Description string    `json:"description" db:"description" validate:"required,lte=255"`
+	Active      bool      `json:"active" db:"active" validate:"omitempty"`
+	OrderNumber int       `json:"order_number" db:"order_number" validate:"omitempty"`
+}
+
 // All Status response
 type StatusList struct {
-	TotalCount int       `json:"total_count"`
-	TotalPages int       `json:"total_pages"`
-	Page       int       `json:"page"`
-	Size       int       `json:"size"`
-	HasMore    bool      `json:"has_more"`
-	Status     []*Status `json:"data"`
+	TotalCount int           `json:"total_count"`
+	TotalPages int           `json:"total_pages"`
+	Page       int           `json:"page"`
+	Size       int           `json:"size"`
+	HasMore    bool          `json:"has_more"`
+	Status     []*StatusBase `json:"data"`
 }

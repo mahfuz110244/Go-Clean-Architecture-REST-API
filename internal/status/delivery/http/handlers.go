@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -173,7 +174,6 @@ func (h statusHandlers) GetStatus() echo.HandlerFunc {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
 		}
-
 		statusList, err := h.statusUC.GetStatus(ctx, pq)
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)
@@ -205,7 +205,6 @@ func (h statusHandlers) SearchByTitle() echo.HandlerFunc {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
 		}
-
 		statusList, err := h.statusUC.SearchByTitle(ctx, c.QueryParam("title"), pq)
 
 		if err != nil {

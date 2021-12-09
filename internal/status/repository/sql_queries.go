@@ -32,18 +32,18 @@ const (
 
 	getTotalCount = `SELECT COUNT(id) FROM status WHERE deleted_at IS NULL`
 
-	getStatus = `SELECT id, created_by, updated_by, created_at, updated_at, deleted_at, updated_at, name, description, active, order_number
+	getStatus = `SELECT id, name, description, active, order_number
 				FROM status 
 				WHERE deleted_at IS NULL
 				ORDER BY order_number, created_at, updated_at OFFSET $1 LIMIT $2`
 
 	findByTitleCount = `SELECT COUNT(*)
 					FROM status
-					WHERE title ILIKE '%' || $1 || '%'`
+					WHERE description ILIKE '%' || $1 || '%'`
 
-	findByTitle = `SELECT status_id, author_id, title, content, image_url, category, updated_at, created_at
+	findByTitle = `SELECT id, name, description, active, order_number
 					FROM status
-					WHERE title ILIKE '%' || $1 || '%'
-					ORDER BY title, created_at, updated_at
+					WHERE description ILIKE '%' || $1 || '%'
+					ORDER BY order_number, created_at, updated_at
 					OFFSET $2 LIMIT $3`
 )

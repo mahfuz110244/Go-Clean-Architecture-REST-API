@@ -116,11 +116,11 @@ func (r *statusRepo) GetStatus(ctx context.Context, pq *utils.PaginationQuery) (
 			Page:       pq.GetPage(),
 			Size:       pq.GetSize(),
 			HasMore:    utils.GetHasMore(pq.GetPage(), totalCount, pq.GetSize()),
-			Status:     make([]*models.Status, 0),
+			Status:     make([]*models.StatusBase, 0),
 		}, nil
 	}
 
-	var statusList = make([]*models.Status, 0, pq.GetSize())
+	var statusList = make([]*models.StatusBase, 0, pq.GetSize())
 	rows, err := r.db.QueryxContext(ctx, getStatus, pq.GetOffset(), pq.GetLimit())
 	if err != nil {
 		return nil, errors.Wrap(err, "statusRepo.GetStatus.QueryxContext")
@@ -128,7 +128,7 @@ func (r *statusRepo) GetStatus(ctx context.Context, pq *utils.PaginationQuery) (
 	defer rows.Close()
 
 	for rows.Next() {
-		n := &models.Status{}
+		n := &models.StatusBase{}
 		if err = rows.StructScan(n); err != nil {
 			return nil, errors.Wrap(err, "statusRepo.GetStatus.StructScan")
 		}
@@ -165,11 +165,11 @@ func (r *statusRepo) SearchByTitle(ctx context.Context, title string, query *uti
 			Page:       query.GetPage(),
 			Size:       query.GetSize(),
 			HasMore:    utils.GetHasMore(query.GetPage(), totalCount, query.GetSize()),
-			Status:     make([]*models.Status, 0),
+			Status:     make([]*models.StatusBase, 0),
 		}, nil
 	}
 
-	var statusList = make([]*models.Status, 0, query.GetSize())
+	var statusList = make([]*models.StatusBase, 0, query.GetSize())
 	rows, err := r.db.QueryxContext(ctx, findByTitle, title, query.GetOffset(), query.GetLimit())
 	if err != nil {
 		return nil, errors.Wrap(err, "statusRepo.SearchByTitle.QueryxContext")
@@ -177,7 +177,7 @@ func (r *statusRepo) SearchByTitle(ctx context.Context, title string, query *uti
 	defer rows.Close()
 
 	for rows.Next() {
-		n := &models.Status{}
+		n := &models.StatusBase{}
 		if err = rows.StructScan(n); err != nil {
 			return nil, errors.Wrap(err, "statusRepo.SearchByTitle.StructScan")
 		}
