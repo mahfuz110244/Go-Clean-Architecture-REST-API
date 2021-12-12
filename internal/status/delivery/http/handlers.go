@@ -1,7 +1,6 @@
 package http
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -168,19 +167,12 @@ func (h statusHandlers) GetStatus() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		span, ctx := opentracing.StartSpanFromContext(utils.GetRequestCtx(c), "statusHandlers.GetStatus")
 		defer span.Finish()
-
-		fmt.Println(c.QueryParam("id"))
-		fmt.Println(c.QueryParam("name") == "")
-		fmt.Println(c.QueryParam("active"))
-		fmt.Println(c.QueryParam("order_number"))
 		params := &models.StatusParams{
-			ID:          c.QueryParam("id"),
 			Name:        c.QueryParam("name"),
 			Description: c.QueryParam("description"),
 			Active:      c.QueryParam("active"),
 			OrderNumber: c.QueryParam("order_number"),
 		}
-		fmt.Println(*params)
 		pq, err := utils.GetPaginationFromCtx(c)
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)

@@ -122,15 +122,32 @@ func (r *statusRepo) GetStatus(ctx context.Context, params *models.StatusParams,
 	}
 
 	var statusList = make([]*models.StatusBase, 0, pq.GetSize())
-	if params != nil {
-		fmt.Println(params)
-		fmt.Println(params.ID == "")
-		fmt.Println(params.Name == "")
+	queryParam := make(map[string]interface{})
+	paramString := ""
+	if params.Name != "" {
+		queryParam["name"] = params.Name
+		paramString += fmt.Sprintf(" AND name='%v'", params.Name)
 	}
-	// getStatus := `SELECT id, name, description, active, order_number
-	// FROM status 
-	// WHERE deleted_at IS NULL
-	// ORDER BY order_number, created_at, updated_at OFFSET $1 LIMIT $2`
+	if params.Description != "" {
+		queryParam["description"] = params.Description
+		paramString += fmt.Sprintf(" AND description='%v'", params.Description)
+	}
+	if params.Active != "" {
+		queryParam["active"] = params.Active
+		paramString += fmt.Sprintf(" AND active=%v", params.Active)
+	}
+	if params.OrderNumber != "" {
+		queryParam["order_number"] = params.OrderNumber
+		paramString += fmt.Sprintf(" AND order_number=%v", params.OrderNumber)
+	}
+	getStatus := `SELECT id, name, description, active, order_number
+	FROM status
+	WHERE deleted_at IS NULL
+	ORDER BY order_number, created_at, updated_at OFFSET $1 LIMIT $2`
+	if paramString != "" {
+		getStatus = fmt.Sprintf("SELECT id, name, description, active, order_number FROM status WHERE deleted_at IS NULL%s ORDER BY order_number, created_at, updated_at OFFSET $1 LIMIT $2", paramString)
+	}
+	fmt.Println(getStatus)
 	rows, err := r.db.QueryxContext(ctx, getStatus, pq.GetOffset(), pq.GetLimit())
 	if err != nil {
 		return nil, errors.Wrap(err, "statusRepo.GetStatus.QueryxContext")

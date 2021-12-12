@@ -31,7 +31,6 @@ type StatusBase struct {
 
 // Status Params model
 type StatusParams struct {
-	ID          string `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Active      string `json:"active"`
