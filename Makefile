@@ -47,8 +47,15 @@ swaggo:
 	echo "Starting swagger generating"
 	swag init -g **/**/*.go
 
-
 # ==============================================================================
+# Tools commands
+
+build-mocks:
+	@go get github.com/golang/mock/gomock
+	@go install github.com/golang/mock/mockgen@v1.6.0
+	@~/go/bin/mockgen -source=internal/status/usecase.go -destination=internal/status/mock/usecase_mock.go -package=mock
+	@~/go/bin/mockgen -source=internal/status/pg_repository.go -destination=internal/status/mock/pg_repository_mock.go -package=mock
+	@~/go/bin/mockgen -source=internal/status/redis_repository.go -destination=internal/status/mock/redis_repository_mock.go -package=mock
 # Main
 
 run:

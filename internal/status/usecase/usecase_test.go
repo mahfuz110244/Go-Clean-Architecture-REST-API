@@ -176,10 +176,11 @@ func TestStatusUC_GetStatus(t *testing.T) {
 	}
 
 	statusList := &models.StatusList{}
+	statusParams := &models.StatusParams{}
 
-	mockStatusRepo.EXPECT().GetStatus(ctxWithTrace, query).Return(statusList, nil)
+	mockStatusRepo.EXPECT().GetStatus(ctxWithTrace, gomock.Any(), query).Return(statusList, nil)
 
-	status, err := statusUC.GetStatus(ctx, query)
+	status, err := statusUC.GetStatus(ctx, statusParams, query)
 	require.NoError(t, err)
 	require.Nil(t, err)
 	require.NotNil(t, status)

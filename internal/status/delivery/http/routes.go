@@ -10,6 +10,7 @@ import (
 // Map status routes
 func MapStatusRoutes(statusGroup *echo.Group, h status.Handlers, mw *middleware.MiddlewareManager) {
 	// statusGroup.POST("/create", h.Create(), mw.AuthSessionMiddleware, mw.CSRF)
+	// statusGroup.POST("", h.Create(), mw.AuthSessionMiddleware)
 	statusGroup.POST("", h.Create(), mw.AuthSessionMiddleware)
 	statusGroup.PUT("/:id", h.Update(), mw.AuthSessionMiddleware)
 	statusGroup.DELETE("/:id", h.Delete(), mw.AuthSessionMiddleware)
