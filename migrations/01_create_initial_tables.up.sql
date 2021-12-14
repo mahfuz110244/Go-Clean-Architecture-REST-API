@@ -60,15 +60,15 @@ CREATE INDEX IF NOT EXISTS news_title_id_idx ON news (title);
 -- CREATE TYPE status_enum AS ENUM ('estimate', 'issued', 'in_progress', 'fulfilled', 'closed_short', 'void', 'expired');
 CREATE TABLE IF NOT EXISTS status (
 	id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	deleted_at TIMESTAMP,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
+    updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
+	deleted_at TIMESTAMP WITHOUT TIME ZONE NULL DEFAULT NULL,
 	created_by VARCHAR (36),
 	updated_by VARCHAR (36),
 	name VARCHAR (36),
 	description VARCHAR (255),
 	active BOOLEAN NOT NULL DEFAULT TRUE,
-	order_no smallint DEFAULT 0,
+	order_number smallint DEFAULT 0,
 	UNIQUE(name)
 );
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS status (
 CREATE OR REPLACE FUNCTION trigger_set_update_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
-  NEW.updated_at = NOW();
+  NEW.updated_at = NOW() AT TIME ZONE 'utc';
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
